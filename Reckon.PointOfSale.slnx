@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Reckon.PointOfSale.WebApi/Reckon.PointOfSale.WebApi.csproj" Id="437b0bd3-ceb2-4914-bc89-351e7e323c7d" />
+  </Folder>
+</Solution>
