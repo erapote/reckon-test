@@ -12,14 +12,14 @@ internal sealed partial class OrderPlacedHandler(ILogger<OrderPlacedHandler> log
 
     public async Task HandleAsync(EventRecord record, CancellationToken ct)
     {
-        LogOrderInitialized(record.Id, record.Payload.HasValue ? record.Payload.Value.ToString() : "<no payload>");
+        var payload = record.Payload.ToString();
+        LogOrderInitialized(record.Id, payload);
 
         // Simulate heavier I/O (inventory check, payment, fulfilment kick-off)
         await Task.Delay(120, ct);
 
         // Extract a simple field from the free-form payload for demo purposes
-        if (record.Payload.HasValue &&
-            record.Payload.Value.TryGetProperty("orderId", out var orderIdEl))
+        if (record.Payload.TryGetProperty("orderId", out var orderIdEl))
         {
             var orderId = orderIdEl.ToString();
             LogOrderInfo(orderId, record.Id);
@@ -30,7 +30,7 @@ internal sealed partial class OrderPlacedHandler(ILogger<OrderPlacedHandler> log
         }
     }
 
-    [LoggerMessage(Level = LogLevel.Information,  Message = "[OrderPlaced] Processing event {EventId}. Payload: {Payload}")]
+    [LoggerMessage(Level = LogLevel.Information, Message = "[OrderPlaced] Processing event {EventId}. Payload: {Payload}")]
     private partial void LogOrderInitialized(Guid eventId, string payload);
 
     [LoggerMessage(Level = LogLevel.Information, Message = "[OrderPlaced] Order {OrderId} queued for fulfilment (event {EventId})")]

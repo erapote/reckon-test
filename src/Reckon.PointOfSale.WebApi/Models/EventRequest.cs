@@ -9,11 +9,11 @@ namespace Reckon.PointOfSale.WebApi.Models;
 internal sealed record EventRequest
 {
     [JsonPropertyName("eventType")]
-    public string? EventType { get; init; }
+    public required string EventType { get; init; }
 
     [JsonPropertyName("payload")]
-    public JsonElement? Payload { get; init; }
+    public required JsonElement Payload { get; init; }
 
     [JsonPropertyName("timestamp")]
-    public DateTimeOffset? Timestamp { get; init; }
+    public required DateTimeOffset Timestamp { get; init; }
 }
