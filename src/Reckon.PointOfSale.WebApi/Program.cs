@@ -62,11 +62,7 @@ app.MapPost("/events", async (
         errors[nameof(req.EventType)] = ["eventType is required."];
     }
 
-    if (req.Timestamp is null)
-    {
-        errors[nameof(req.Timestamp)] = ["timestamp is required."];
-    }
-    else if (req.Timestamp.Value > DateTimeOffset.UtcNow.AddSeconds(5)) // 5-second clock-skew allowance
+    if (req.Timestamp > DateTimeOffset.UtcNow.AddSeconds(5)) // 5-second clock-skew allowance
     {
         errors[nameof(req.Timestamp)] = ["timestamp must not be in the future."];
     }
@@ -80,9 +76,9 @@ app.MapPost("/events", async (
     var record = new EventRecord
     {
         Id = Guid.NewGuid(),
-        EventType = req.EventType!,
+        EventType = req.EventType,
         Payload = req.Payload,
-        Timestamp = req.Timestamp!.Value
+        Timestamp = req.Timestamp
     };
 
     store.Add(record);

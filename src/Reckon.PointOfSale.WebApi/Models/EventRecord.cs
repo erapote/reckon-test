@@ -9,7 +9,7 @@ internal sealed record EventRecord
 {
     public Guid Id { get; init; }
     public string EventType { get; init; } = string.Empty;
-    public JsonElement? Payload { get; init; }
+    public JsonElement Payload { get; init; }
     public DateTimeOffset Timestamp { get; init; }
     public EventStatus Status { get; set; } = EventStatus.Pending;
     public DateTimeOffset ReceivedAt { get; init; } = DateTimeOffset.UtcNow;
