@@ -1,4 +1,57 @@
 @Reckon.PointOfSale.WebApi_HostAddress = http://localhost:5238
 
+### Post a UserCreated event
+POST {{Reckon.PointOfSale.WebApi_HostAddress}}/events
+Content-Type: application/json
 
-###
+{
+  "eventType": "UserCreated",
+  "payload": {
+    "userId": "usr-001",
+    "name": "Jane Doe",
+    "email": "jane@example.com"
+  },
+  "timestamp": "2025-01-15T10:30:00Z"
+}
+
+### Post an OrderPlaced event
+POST {{Reckon.PointOfSale.WebApi_HostAddress}}/events
+Content-Type: application/json
+
+{
+  "eventType": "OrderPlaced",
+  "payload": {
+    "orderId": "ord-100",
+    "amount": 49.95,
+    "currency": "AUD"
+  },
+  "timestamp": "2025-01-15T11:00:00Z"
+}
+
+### Post an unknown event (handled by FallbackHandler)
+POST {{Reckon.PointOfSale.WebApi_HostAddress}}/events
+Content-Type: application/json
+
+{
+  "eventType": "InventoryAdjusted",
+  "payload": {
+    "sku": "SKU-999",
+    "delta": -3
+  },
+  "timestamp": "2025-01-15T12:00:00Z"
+}
+
+### Post an invalid event (missing eventType — returns validation error)
+POST {{Reckon.PointOfSale.WebApi_HostAddress}}/events
+Content-Type: application/json
+
+{
+  "payload": { "data": "test" },
+  "timestamp": "2025-01-15T12:00:00Z"
+}
+
+### Get all events
+GET {{Reckon.PointOfSale.WebApi_HostAddress}}/events
+
+### Get a single event by ID (replace with a real ID from a previous POST response)
+GET {{Reckon.PointOfSale.WebApi_HostAddress}}/events/e1244140-e42c-44c4-b962-33aaaebf253f
